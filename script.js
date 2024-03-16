@@ -5,15 +5,24 @@ let colorSelected;
 
 // Add a row
 function addR() {
-    let grid = document.getElementById("grid"); 
-    let newRow = grid.insertRow(); 
-    let numCols = grid.rows[0].cells.length; 
+    let grid = document.getElementById("grid");
+    let numRows = grid.rows.length;
+    let numCols = numRows > 0 ? grid.rows[0].cells.length : 0; 
 
-    for (let i = 0; i < numCols; i++) {
+    let newRow = grid.insertRow();
+   
+    if (numCols === 0) {
         let newCell = newRow.insertCell();
-        newCell.onclick = function() { 
-            this.style.backgroundColor = colorSelected; 
+        newCell.onclick = function() {
+            this.style.backgroundColor = colorSelected;
         };
+    } else {
+        for (let i = 0; i < numCols; i++) {
+            let newCell = newRow.insertCell();
+            newCell.onclick = function() {
+                this.style.backgroundColor = colorSelected;
+            };
+        }
     }
 }
 
@@ -21,6 +30,7 @@ function addR() {
 function addC() {
     let grid = document.getElementById("grid");
     let numRows = grid.rows.length;
+    let numCols = numRows > 0 ? grid.rows[0].cells.length : 0; 
 
     for (let i = 0; i < numRows; i++) {
         let newCell = grid.rows[i].insertCell();
@@ -28,7 +38,16 @@ function addC() {
             this.style.backgroundColor = colorSelected;
         };
     }
+
+    if (numRows === 0) {
+        let newRow = grid.insertRow();
+        let newCell = newRow.insertCell();
+        newCell.onclick = function() {
+            this.style.backgroundColor = colorSelected;
+        };
+    }
 }
+
 
 // Remove a row
 function removeR() {
